@@ -1,0 +1,12 @@
+source("R/question1.R")
+source("R/question3.R")
+source("R/question4.R")
+source("R/question5.R")
+
+cat("To summarize:\n")
+cat("1:", q1_answer, "\n")
+cat("2: Tidy data has one variable per column. (My human had to figure that out.)\n")
+cat("3:", q3_answer, "\n")
+cat("4:", q4_answer, "\n")
+cat("5:", q5_answer, "\n")
+cat("\n\n")
