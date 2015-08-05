@@ -1,0 +1,11 @@
+Package: CourseProject
+Type: Package
+Title: This is the code for the course project for Getting and Cleaning Data
+Version: 1.0
+Date: 2015-08-05
+Author: Joseph Ramaswami
+Maintainer: Joseph Ramaswami <jramaswami@gmail.com>
+Description: This is code for the course project for the Coursera Course
+Getting and Cleaning Data.  For more information on the course, go to 
+https://www.coursera.org/course/getdata.  
+License: What license is it under?
