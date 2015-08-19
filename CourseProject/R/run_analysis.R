@@ -1,4 +1,65 @@
 library(dplyr)
+library(stringr)
+library(reshape2)
+
+###############################################################################
+# Function to rename columns
+###############################################################################
+nameColumn <- function(cname) {
+        # measure -- Mean or Std. Dev.
+        measure = "Uknown_Measure"
+        if (str_detect(cname, "\\.std")) {
+                measure = "Standard_Deviation"
+        } else if (str_detect(cname, "\\.mean")) {
+                measure = "Mean"
+        }
+        # input type -- Time or Fast Fourier Transform
+        inputType = "Unknown_Input_Type"
+        if (substring(cname, 0, 1) == "f") {
+                inputType = "Fast_Fourier_Transform"
+        } else if (substring(cname, 0, 1) == "t") {
+                inputType = "Time"
+        }
+        
+        # acceleration component -- Body or Gravity
+        accelerationComponent = "Unknown_Acceleration_Component"
+        if (str_detect(cname, "Body")) {
+                accelerationComponent = "Estimated_Body"
+        } else if (str_detect(cname, "Gravity")) {
+                accelerationComponent = "Gravity"
+        }
+        
+        
+        # acceleration type -- Linear, Angular, Linear Jerk, Angular Jerk
+        accelerationType = "Unknown_Acceleration_Type"
+        if (str_detect(cname, "Acc")) {
+                accelerationType = "Linear"
+        } else if (str_detect(cname, "Gyro")) {
+                accelerationType = "Angular"
+        }
+        if (str_detect(cname, "Jerk")) {
+                accelerationType = paste(accelerationType, "Jerk", sep="_")
+        }
+        
+        # vector characteristic -- X, Y, Z, Magnitude
+        vectorCharacteristic = "Uknown_Vector_Characteristic"
+        if (str_detect(cname, "Mag")) {
+                vectorCharacteristic = "Magnitude"
+        } else if (str_detect(cname, "\\.X")) {
+                vectorCharacteristic = "X"
+        } else if (str_detect(cname, "\\.Y")) {
+                vectorCharacteristic = "Y"
+        } else if (str_detect(cname, "\\.Z")) {
+                vectorCharacteristic = "Z"
+        }
+        
+        newName <- paste(measure, inputType, accelerationComponent, accelerationType, vectorCharacteristic, sep=".")
+        newName
+}
+
+selectColumnName <- function(value, index) {
+        
+}
 
 ###############################################################################
 # Read and clean data
@@ -56,56 +117,14 @@ rm(tdf_test, tdf_train)
 # Exclude angle columns because they are actually measures of the angles between
 # the mean measures, not a mean measure.
 tdf_data <- select(tdf_data, subject, activity.code,
-                    contains("mean"), contains("std"), -contains("angle"))
+                    contains("mean"), contains("std"), -contains("angle"), -contains("meanFreq"))
 
 ###############################################################################
 # Rename all the columns to be more informatively named
 ###############################################################################
 n = names(tdf_data)
-# mean columns
-n2 <- sub("tBodyAcc.mean\\.\\.\\.", "Mean.EstimatedBody.LinearAcceleration.",n)
-n2 <- sub("tGravityAcc.mean\\.\\.\\.", "Mean.Gravitational.LinearAcceleration.",n2)
-n2 <- sub("tBodyAccJerk.mean\\.\\.\\.", "Mean.EstimatedBody.Linear.Acceleration.Jerk.",n2)
-n2 <- sub("tBodyGyro.mean\\.\\.\\.", "Mean.EstimatedBody.Angular.Acceleration.", n2)
-n2 <- sub("tBodyGyroJerk.mean\\.\\.\\.", "Mean.EstimatedBody.Angular.Acceleration.Jerk.", n2)
-n2 <- sub("tBodyAccMag.mean\\.\\.", "Mean.EstimatedBody.LinearAcceleration.Magnitude", n2)
-n2 <- sub("tGravityAccMag.mean\\.\\.", "Mean.Gravitational.LinearAcceleration.Magnitude", n2)
-n2 <- sub("tBodyAccJerkMag.mean\\.\\.", "Mean.EstimatedBody.Linear.Acceleration.Jerk.Magnitude",n2)
-n2 <- sub("tBodyGyroMag.mean\\.\\.", "Mean.EstimatedBody.Angular.Acceleration.Magnitude", n2)
-n2 <- sub("tBodyGyroJerkMag.mean\\.\\.","Mean.EstimatedBody.Angular.Acceleration.Jerk.Magnitude", n2)
-n2 <- sub("fBodyAcc.mean\\.\\.\\.", "Mean.FastFourierTransform.EstimatedBody.LinearAcceleration.", n2)
-n2 <- sub("fBodyAcc.meanFreq\\.\\.\\.", "Mean.Frequency.FastFFourierTransform.EstimatedBody.LinearAcceleration", n2)
-n2 <- sub("fBodyAccJerk.mean\\.\\.\\.", "Mean.FastFourierTransform.EstimatedBody.Linear.Acceleration.Jerk.",n2)
-n2 <- sub("fBodyAccJerk.meanFreq\\.\\.\\.", "Mean.Frequency.FastFourierTransform.EstimatedBody.Linear.Acceleration.Jerk.",n2)
-n2 <- sub("fBodyGyro.mean\\.\\.\\.", "Mean.FastFourierTransform.EstimatedBody.Angular.Acceleration.", n2)
-n2 <- sub("fBodyGyro.meanFreq\\.\\.\\.", "Mean.Frequency.FastFourierTransform.EstimatedBody.Angular.Acceleration.", n2)
-n2 <- sub("fBodyAccMag.mean\\.\\.", "Mean.FastFourierTransform.EstimatedBody.LinearAcceleration.Magnitude", n2)
-n2 <- sub("fBodyAccMag.meanFreq\\.\\.", "Mean.Frequency.FastFourierTransform.EstimatedBody.LinearAcceleration.Magnitude", n2)
-n2 <- sub("fBodyBodyAccJerkMag.mean\\.\\.", "Mean.FastFourierTransform.EstimatedBody.Linear.Acceleration.Jerk.Magnitude",n2)
-n2 <- sub("fBodyBodyAccJerkMag.meanFreq\\.\\.", "Mean.Frequency.FastFourierTransform.EstimatedBody.Linear.Acceleration.Jerk.Magnitude",n2)
-n2 <- sub("fBodyBodyGyroMag.mean\\.\\.", "Mean.FastFourierTransform.EstimatedBody.Angular.Acceleration.Magnitude", n2)
-n2 <- sub("fBodyBodyGyroMag.meanFreq\\.\\.", "Mean.Frequency.FastFourierTransform.EstimatedBody.Angular.Acceleration.Magnitude", n2)
-n2 <- sub("fBodyBodyGyroJerkMag.mean\\.\\.","Mean.FastFourierTransform.EstimatedBody.Angular.Acceleration.Jerk.Magnitude", n2)
-n2 <- sub("fBodyBodyGyroJerkMag.meanFreq\\.\\.","Mean.Frequency.FastFourierTransform.EstimatedBody.Angular.Acceleration.Jerk.Magnitude", n2)
-
-# std. dev. columns
-n2 <- sub("tBodyAcc.std\\.\\.\\.", "StdDev.EstimatedBody.LinearAcceleration.",n2)
-n2 <- sub("tGravityAcc.std\\.\\.\\.", "StdDev.Gravitational.LinearAcceleration.",n2)
-n2 <- sub("tBodyAccJerk.std\\.\\.\\.", "StdDev.EstimatedBody.Linear.Jerk.Acceleration.",n2)
-n2 <- sub("tBodyGyro.std\\.\\.\\.", "StdDev.EstimatedBody.Angular.Acceleration.", n2)
-n2 <- sub("tBodyGyroJerk.std\\.\\.\\.", "StdDev.EstimatedBody.Angular.Acceleration.Jerk.", n2)
-n2 <- sub("tBodyAccMag.std\\.\\.", "StdDev.EstimatedBody.LinearAcceleration.Magnitude", n2)
-n2 <- sub("tGravityAccMag.std\\.\\.", "StdDev.Gravitational.LinearAcceleration.Magnitude", n2)
-n2 <- sub("tBodyAccJerkMag.std\\.\\.", "StdDev.EstimatedBody.Linear.Acceleration.Jerk.Magnitude",n2)
-n2 <- sub("tBodyGyroMag.std\\.\\.", "StdDev.EstimatedBody.Angular.Acceleration.Magnitude", n2)
-n2 <- sub("tBodyGyroJerkMag.std\\.\\.","StdDev.EstimatedBody.Angular.Acceleration.Jerk.Magnitude", n2)
-n2 <- sub("fBodyAcc.std\\.\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.LinearAcceleration.", n2)
-n2 <- sub("fBodyAccJerk.std\\.\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.Linear.Jerk.Acceleration.",n2)
-n2 <- sub("fBodyGyro.std\\.\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.Angular.Acceleration.", n2)
-n2 <- sub("fBodyAccMag.std\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.LinearAcceleration.Magnitude", n2)
-n2 <- sub("fBodyBodyAccJerkMag.std\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.Linear.Acceleration.Jerk.Magnitude",n2)
-n2 <- sub("fBodyBodyGyroMag.std\\.\\.", "StdDev.FastFourierTransform.EstimatedBody.Angular.Acceleration.Magnitude", n2)
-n2 <- sub("fBodyBodyGyroJerkMag.std\\.\\.","StdDev.FastFourierTransform.EstimatedBody.Angular.Acceleration.Jerk.Magnitude", n2)
+n2 <- as.character(sapply(n[-c(1:2)], nameColumn))
+n2 <- c(n[1:2], n2)
 names(tdf_data) <- n2
 rm(n, n2)
 
@@ -122,21 +141,37 @@ rm(activity_labels)
 # turn tdf_data back into a tbl_df; merge makes it a data.frame
 tdf_data <- tbl_df(tdf_data)
 # rearrange data
-tdf_data <- select(tdf_data, subject, activity.label, 3:81)
+tdf_data <- select(tdf_data, subject, activity.label, 3:68)
 
 ###############################################################################
 # Summarize data by getting means on all the data cols (3:81)
 ###############################################################################
-tdf_summary <- tdf_data %>%
-        group_by(subject, activity.label) %>%
-        summarise_each(funs(mean), 3:81)
-# clean up names
-n <- names(tdf_summary)
-n <- n[3:81]
-paste("Mean.of.", n, sep="")
-n <- c("subject","activity_label",n)
-names(tdf_summary) <- n
+# tdf_summary <- tdf_data %>%
+#         group_by(subject, activity.label) %>%
+#         summarise_each(funs(mean), 3:81)
+# # clean up names
+# n <- names(tdf_summary)
+# n <- n[3:81]
+# paste("Mean.of.", n, sep="")
+# n <- c("subject","activity_label",n)
+# names(tdf_summary) <- n
 
 ###############################################################################
 # TODO: TIDY DATA!
 ###############################################################################
+tidy <- melt(tdf_data, id.vars = c("subject", "activity.label"))
+tidy$descriptive.statistic <- word(tidy$variable, 1, sep=fixed("."))
+tidy$input.type <- word(tidy$variable, 2, sep=fixed("."))
+tidy$acceleration.component <- word(tidy$variable, 3, sep=fixed("."))
+tidy$acceleration.type <- word(tidy$variable, 4, sep=fixed("."))
+tidy$vector.characteristic <- word(tidy$variable, 5, sep=fixed("."))
+tidy <- select(tidy, subject, activity.label, descriptive.statistic, 
+               input.type, acceleration.component, acceleration.type, 
+               vector.characteristic, value)
+tidy <- tbl_df(tidy)
+tdf_summary <- tidy %>%
+        group_by(subject, activity.label, 
+                 descriptive.statistic, input.type,
+                 acceleration.component, acceleration.type,
+                 vector.characteristic) %>%
+        summarize(mean.value=mean(value))
