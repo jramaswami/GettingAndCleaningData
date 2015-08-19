@@ -19,7 +19,6 @@ downloadData <- function() {
 				  "2. Original data source (UC Irvine)")
 	response <- getUserInput(prompt, choices)
 
-	#response <- determineURL()
 	if (response == 0) {
 		# user quit or wouldn't choose
 		return(FALSE)
@@ -56,7 +55,7 @@ downloadData <- function() {
 				file.remove(jsonFilePath)
 			}
 		} else {
-			doDownload <- false
+			doDownload <- FALSE
 		}
 	} 
 
@@ -74,6 +73,20 @@ downloadData <- function() {
 		}
 		cat("Writing download metadata to", jsonFilePath, "...\n")
 		cat(json, file=jsonFilePath)
+		cat("Extracting file ... \n")
+		unzip(destFilePath, overwrite = TRUE, exdir="data")
+		
+		cat("Getting rid of unecessary data ...\n")
+		unlink(file.path("data", "UCI\ HAR\ Dataset", "train", "Inertial Signals"), recursive=TRUE, force=TRUE)
+		unlink(file.path("data", "UCI\ HAR\ Dataset", "test", "Inertial Signals"), recursive=TRUE, force=TRUE)
+		
+		cat("Renaming folder to 'raw' ...")
+		rawPath <- file.path("data", "raw")
+		if (file.exists(rawPath)) {
+		        unlink(rawPath, recursive=TRUE, force=TRUE)
+		}
+		rename <- file.rename(file.path("data","UCI\ HAR\ Dataset"), file.path("data","raw"))
+		
 	}
 }
 
@@ -90,44 +103,12 @@ getUserInput <- function(prompt, choices) {
 		cat(n, ": Quit\n")
 		quit_response <- n
 		response <- as.numeric(readline(">>>"))
-
 		if (is.na(response)) {
 			response <- 0
 		}
-		if (response > 0 & response < length(choices)) {
+		if (response > 0 & response <= length(choices)) {
 			return(response)
 		} else if (response == quit_response) {
-			waiting <- FALSE
-		}
-
-		tries <- tries + 1
-
-		if (tries > 5) {
-			cat("Obviously, you're just messing with me.\n")
-			waiting <- FALSE
-		}
-	}
-	cat ("Goodbye!\n")
-	0
-}
-
-determineURL <- function() {
-	waiting <- TRUE
-	tries <- 0
-	while (waiting) {
-		cat("Would you like me to download data from\n")
-		cat("1. Coursera?\n")
-		cat("2. Original data source (UC Irvine)?\n")
-		cat("3. Quit?\n")
-		response <- as.numeric(readline(">>>"))
-		if (is.na(response)) {
-			response <- 0
-		}
-		if (response == 1) {
-			return(response)
-		} else if (response == 2) {
-			return(response)
-		} else if (response == 3) {
 			waiting <- FALSE
 		}
 
