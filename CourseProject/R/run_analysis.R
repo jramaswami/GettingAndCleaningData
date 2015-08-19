@@ -2,6 +2,9 @@ library(dplyr)
 library(stringr)
 library(reshape2)
 
+inputDataDir = file.path("data","raw")
+outputDataDir = file.path("data","tidy")
+
 ###############################################################################
 # Function to rename columns
 ###############################################################################
@@ -54,11 +57,8 @@ nameColumn <- function(cname) {
         }
         
         newName <- paste(measure, inputType, accelerationComponent, accelerationType, vectorCharacteristic, sep=".")
+        newName <- str_to_upper(newName)
         newName
-}
-
-selectColumnName <- function(value, index) {
-        
 }
 
 ###############################################################################
@@ -66,20 +66,17 @@ selectColumnName <- function(value, index) {
 ###############################################################################
 
 # read the names of the x data columns
-x_names <- read.table(file.path("data", "UCI\ HAR\ Dataset", "features.txt"))
+x_names <- read.table(file.path(inputDataDir, "features.txt"))
 
 # read train x data
-x_train <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                               "train", "X_train.txt"))
+x_train <- read.table(file.path(inputDataDir, "train", "X_train.txt"))
 names(x_train) <- make.names(as.vector(x_names[,2]), unique=TRUE)
 #read train y data
-y_train <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                               "train", "y_train.txt"))
+y_train <- read.table(file.path(inputDataDir, "train", "y_train.txt"))
 names(y_train) <- c("activity.code")
 
 # read train subject data
-subj_train <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                                  "train", "subject_train.txt"))
+subj_train <- read.table(file.path(inputDataDir, "train", "subject_train.txt"))
 names(subj_train) <- c("subject")
 
 # bind all the columns together to create full training dataset
@@ -89,18 +86,15 @@ tdf_train <- tbl_df(df_train)
 rm(df_train)
 
 # read test x data
-x_test <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                        "test", "X_test.txt"))
+x_test <- read.table(file.path(inputDataDir, "test", "X_test.txt"))
 names(x_test) <- make.names(as.vector(x_names[,2]), unique=TRUE)
 
 # read test y data
-y_test <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                        "test", "y_test.txt"))
+y_test <- read.table(file.path(inputDataDir, "test", "y_test.txt"))
 names(y_test) <- c("activity.code")
 
 # read test subject data
-subj_test <- read.table(file.path("data", "UCI\ HAR\ Dataset", 
-                           "test", "subject_test.txt"))
+subj_test <- read.table(file.path(inputDataDir, "test", "subject_test.txt"))
 names(subj_test) <- c("subject")
 
 # bind all the columns together to create full test dataset
@@ -117,7 +111,8 @@ rm(tdf_test, tdf_train)
 # Exclude angle columns because they are actually measures of the angles between
 # the mean measures, not a mean measure.
 tdf_data <- select(tdf_data, subject, activity.code,
-                    contains("mean"), contains("std"), -contains("angle"), -contains("meanFreq"))
+                    contains("mean"), contains("std"), 
+                   -contains("angle"), -contains("meanFreq"))
 
 ###############################################################################
 # Rename all the columns to be more informatively named
@@ -132,7 +127,7 @@ rm(n, n2)
 # Add in meaningful activity labels
 ###############################################################################
 # read activity labels
-activity_labels <- read.table(file.path("data", "UCI HAR Dataset", "activity_labels.txt"))
+activity_labels <- read.table(file.path(inputDataDir, "activity_labels.txt"))
 names(activity_labels) <- c("activity.code", "activity.label")
 activity_labels <- tbl_df(activity_labels)
 # merge activity labels into data
@@ -144,34 +139,33 @@ tdf_data <- tbl_df(tdf_data)
 tdf_data <- select(tdf_data, subject, activity.label, 3:68)
 
 ###############################################################################
-# Summarize data by getting means on all the data cols (3:81)
-###############################################################################
-# tdf_summary <- tdf_data %>%
-#         group_by(subject, activity.label) %>%
-#         summarise_each(funs(mean), 3:81)
-# # clean up names
-# n <- names(tdf_summary)
-# n <- n[3:81]
-# paste("Mean.of.", n, sep="")
-# n <- c("subject","activity_label",n)
-# names(tdf_summary) <- n
-
-###############################################################################
-# TODO: TIDY DATA!
+# Tidy Data
 ###############################################################################
 tidy <- melt(tdf_data, id.vars = c("subject", "activity.label"))
-tidy$descriptive.statistic <- word(tidy$variable, 1, sep=fixed("."))
-tidy$input.type <- word(tidy$variable, 2, sep=fixed("."))
-tidy$acceleration.component <- word(tidy$variable, 3, sep=fixed("."))
-tidy$acceleration.type <- word(tidy$variable, 4, sep=fixed("."))
-tidy$vector.characteristic <- word(tidy$variable, 5, sep=fixed("."))
+tidy$descriptive.statistic <- as.factor(word(tidy$variable, 1, sep=fixed(".")))
+tidy$input.type <- as.factor(word(tidy$variable, 2, sep=fixed(".")))
+tidy$acceleration.component <- as.factor(word(tidy$variable, 3, sep=fixed(".")))
+tidy$acceleration.type <- as.factor(word(tidy$variable, 4, sep=fixed(".")))
+tidy$vector.characteristic <- as.factor(word(tidy$variable, 5, sep=fixed(".")))
 tidy <- select(tidy, subject, activity.label, descriptive.statistic, 
                input.type, acceleration.component, acceleration.type, 
                vector.characteristic, value)
 tidy <- tbl_df(tidy)
-tdf_summary <- tidy %>%
+rm(tdf_data)
+###############################################################################
+# Summarize data
+###############################################################################
+summary <- tidy %>%
         group_by(subject, activity.label, 
                  descriptive.statistic, input.type,
                  acceleration.component, acceleration.type,
                  vector.characteristic) %>%
         summarize(mean.value=mean(value))
+
+###############################################################################
+# Output data
+###############################################################################
+if (!dir.exists(file.path(outputDataDir))) {
+        dir.create(file.path(outputDataDir))
+}
+write.table(summary, file.path(outputDataDir,"summary.dat"),row.names=FALSE)
