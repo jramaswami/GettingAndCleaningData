@@ -99,4 +99,8 @@ data/tidy/summary.dat using the write.table() function, as required.
 
 ### Data
 
-The data directory contains all the data necessary for this project.
+All data should reside in the data/ directory.  The R/download_data.R
+will create the data directory if there isn't one.  The R/run_analysis.R
+script reads data from data/raw and writes data to data/tidy.  However,
+this can be changed by altering the inputDataDir and outputDataDir
+variables in lines 5 and 6 of R/run_analysis.R.
