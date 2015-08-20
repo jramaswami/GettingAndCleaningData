@@ -64,9 +64,9 @@ of the raw column name into a value leading to the transformation of:
 
 to
 
-| ... | descriptive.statistic | input.type | acceleration.component | acceleration.type | vector.characteristic | ... |
-|-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----|
-| ... |         MEAN          |    TIME    |         BODY           |       LINEAR      |           X           | ... |
+| ... | descriptive.statistic | input.type | acceleration.component | acceleration.type | vector.characteristic |   value   | ... |
+|-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----------|-----|
+| ... |         MEAN          |    TIME    |         BODY           |       LINEAR      |           X           | 0.3459274 | ... |
 
 The data was reshaped and the coded values placed into the appropriate
 columns to create a "long" form of tidy data.  This was then grouped
