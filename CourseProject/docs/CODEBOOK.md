@@ -63,7 +63,7 @@ Second, the researches applied a Fast Fourier Transform to input as well.
 <td>
 The component of acceleration.  The researchers original data divided
 the acceleration into two components: the gravitational acceleraton and
-an estimated value of the acceleration of the subject's body.
+an estimated value for the acceleration of the subject's body.
 </td>
 <td>
 <ol>
@@ -75,7 +75,7 @@ an estimated value of the acceleration of the subject's body.
 <tr>
 <td>acceleration.type</td>
 <td>
-The type of acceleration.  The researches original data included measurements
+The type of acceleration.  The researchers original data included measurements
 from two devices in the smartphone the subject was wearing: an accelerometer
 and a gyroscope.  Measurements from the accelerometer represent the
 linear acceleration.  Measurements from the gyroscope represent angular
@@ -92,12 +92,36 @@ linear jerk acceleration and angular jerk accleration.
 </ol>
 <td>
 </tr>
+<tr>
+<td>vector.characteristic</td>
+<td>
+The researchers original data measured the acceleration vector in separate
+characteristics: the x direction, the y direction, the z direction, and
+the magnitude of the vector.
+</td>
+<td>
+<ol>
+<li>X</li>
+<li>Y</li>
+<li>Z</li>
+<li>MAGNITUDE</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>mean.value</td>
+<td>This represents the mean value of the original measurements in the
+original research data grouped by:
+<ul>
+<li>activity.label</li>
+<li>descriptive.statistic</li>
+<li>input.type</li>
+<li>acceleration.component</li>
+<li>acceleration.type</li>
+<li>vector.component</li>
+</ul>
+</td>
+<td></td>
+</tr>
 </table>
 
-
-
-
-
-vector.characteristic
-
-mean.value
