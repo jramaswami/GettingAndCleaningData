@@ -1,5 +1,31 @@
 # Codebook
 
+## Summary
+This data is the mean value of the mean and standard deviations
+of acceleration data gathered from the smartphones of volunteers
+as they performed a variety of activities.
+
+The original acceleration data was gathered by  
+researchers Jorge L. Reyes-Ortiz, Davide Anguita,
+Alessandro Ghio, Luca Oneto and Xavier Parra from the 
+martlab - Non-Linear Complex Systems Laboratory
+DITEN - Università degli Studi di Genova, Genoa, Italy and
+CETpD - Technical Research Centre for Dependency Care and Autonomous Living
+Universitat Politècnica de Catalunya, Vilanova i la Geltrú, Spain.
+
+The researchers gathered data from the accelerometer and gyroscope
+of smartphones worn by 30 volunteers while performing six activities:
+walking, walking upstairs, walking downstairs, sitting, standing,
+and laying.  They divided the data into test and training datasets
+for the purposes of their research.  For this project, this division
+has been undone and the test and training datasets have been recombined
+into one dataset.
+
+Mean and standard deviation values for each type of measurement
+were extracted and the mean value calculated.
+
+## Data Dictionary
+
 <table>
 <thead>
 <tr>
@@ -110,8 +136,8 @@ the magnitude of the vector.
 </tr>
 <tr>
 <td>mean.value</td>
-<td>This represents the mean value of the original measurements in the
-original research data grouped by:
+<td>The mean value of the mean and standard deviation
+measurements in the original research data when grouped by:
 <ul>
 <li>activity.label</li>
 <li>descriptive.statistic</li>
