@@ -12,7 +12,7 @@ Alessandro Ghio, Luca Oneto and Xavier Parra from the
 martlab - Non-Linear Complex Systems Laboratory
 DITEN - Università degli Studi di Genova, Genoa, Italy and
 CETpD - Technical Research Centre for Dependency Care and Autonomous Living
-Universitat Politècnica de Catalunya, Vilanova i la Geltrú, Spain
+Universitat Politècnica de Catalunya, Vilanova i la Geltrú, Spain.
 
 The researchers gathered data from the accelerometer and gyroscope
 of smartphones worn by 30 volunteers while performing six activities:
@@ -66,7 +66,7 @@ to
 
 | ... | descriptive.statistic | input.type | acceleration.component | acceleration.type | vector.characteristic |   value   | ... |
 |-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----------|-----|
-| ... |         MEAN          |    TIME    |         BODY           |       LINEAR      |           X           | 0.3459274 | ... |
+| ... |         MEAN          |    TIME    |         GRAVITY        |       LINEAR      |           X           | 0.3459274 | ... |
 
 
 Once the data is tidied the analysis continues by grouping the data and
