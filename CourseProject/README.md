@@ -56,7 +56,7 @@ The value in the column represents the mean linear
 acceleration in the x direction of the gravity component without
 the application of a Fast Fourier Transform (so it is time data).
 The analysis script melts the data and transforms each of the 5 components
-of the raw column name into a value leading to the transformation of:
+of the raw column name into a value leading to the reshaping of:
 
 | ... | tGravityAcc-mean()-X | ... |
 |-----|----------------------|-----|
@@ -68,9 +68,9 @@ to
 |-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----------|-----|
 | ... |         MEAN          |    TIME    |         BODY           |       LINEAR      |           X           | 0.3459274 | ... |
 
-The data was reshaped and the coded values placed into the appropriate
-columns to create a "long" form of tidy data.  This was then grouped
-and summarized to provide a mean value.
+
+Once the data is tidied the analysis continues by grouping the data and
+providing a mean of each value of the groups.
 
 ## Project Directory Structure
 
