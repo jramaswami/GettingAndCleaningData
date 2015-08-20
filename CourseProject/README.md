@@ -33,25 +33,40 @@ that retain "mean" or "std" in the column name.  These columns--which contain
 (See data/raw/features_info.txt for more information on these columns.)
 
 Once the appropriate columns were extracted, the data is to be tidied.
-The intitial issue that jumped out was that the column names coded
-to contain several variables including:  
+The intitial issue that jumped out was that the column names are values,
+not variables.  Each measurement provided by the researchers can
+be categorized in a number of ways:
 
-1.  Data could be time data or have had a Fast Fourier Transform applied.
-2.  Data could be from the accelerometer and represent linear 
-acceleration, or from the gyroscope and represent angular velocity, 
-or represent linear jerk acceleration, or angular jerk acceleration.
+1.  It is either time data or has had a Fast Fourier Transform applied.
+2.  It is from the accelerometer and represents linear 
+acceleration, or from the gyroscope and represents angular velocity, 
+or has had further calculations done and represent linear jerk acceleration
+, or angular jerk acceleration.
 3.  Researchers took the original acceleration data and divided it into
-components, so the data could be the gravitational component or the
-estimated body component.
-4.  Researchers divided the acceleration into the various vector
-components: x direction, y direction, z direction, and magnitude.
-5.  Finally, data could be either a mean value or a standard deviation
+components, so the measurement is either the gravitational component or the
+estimated body component of acceleration.
+4.  Researchers also divided the acceleration into the various vector
+components: x direction, y direction, z direction, and magnitude.  So
+a measurement is represents of these components.
+5.  Finally, the measurement is a mean value or a standard deviation
 value.
 
-The raw data contained columns that represented each combination of
-these factors: e.g. tGravityAcc-mean()-X represents the mean linear
+For example, one column in the raw data set is tGravityAcc-mean()-X.  
+The value in the column represents the mean linear 
 acceleration in the x direction of the gravity component without
 the application of a Fast Fourier Transform (so it is time data).
+The analysis script melts the data and transforms each of the 5 components
+of the raw column name into a value leading to the transformation of:
+
+| ... | tGravityAcc-mean()-X | ... |
+|-----|----------------------|-----|
+| ... |      0.3459274       | ... |
+
+to
+
+| ... | descriptive.statistic | input.type | acceleration.component | acceleration.type | vector.characteristic | ... |
+|-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----|
+| ... |         MEAN          |    TIME    |         BODY           |       LINEAR      |           X           | ... |
 
 The data was reshaped and the coded values placed into the appropriate
 columns to create a "long" form of tidy data.  This was then grouped
