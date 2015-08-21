@@ -64,7 +64,7 @@ of the raw column name into a value leading to the reshaping of:
 <tbody><tr><td>&#8230;</td><td>0.3459274</td><td>&#8230;</td></tr></tbody>
 </table>
 
-to
+to:
 
 <table>
 <thead>
