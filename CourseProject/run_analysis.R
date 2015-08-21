@@ -16,12 +16,12 @@ nameColumn <- function(cname) {
         } else if (str_detect(cname, "\\.mean")) {
                 measure = "Mean"
         }
-        # input type -- Time or Fast Fourier Transform
-        inputType = "Unknown_Input_Type"
+        # signal domain -- Time or Frequency
+        signalDomain = "Unknown_Signal_Domain"
         if (substring(cname, 0, 1) == "f") {
-                inputType = "Fast_Fourier_Transform"
+                signalDomain = "Frequency"
         } else if (substring(cname, 0, 1) == "t") {
-                inputType = "Time"
+                signalDomain = "Time"
         }
         
         # acceleration component -- Body or Gravity
@@ -56,7 +56,7 @@ nameColumn <- function(cname) {
                 vectorCharacteristic = "Z"
         }
         
-        newName <- paste(measure, inputType, accelerationComponent, accelerationType, vectorCharacteristic, sep=".")
+        newName <- paste(measure, signalDomain, accelerationComponent, accelerationType, vectorCharacteristic, sep=".")
         newName <- str_to_upper(newName)
         newName
 }
@@ -143,12 +143,12 @@ tdf_data <- select(tdf_data, subject, activity.label, 3:68)
 ###############################################################################
 tidy <- melt(tdf_data, id.vars = c("subject", "activity.label"))
 tidy$descriptive.statistic <- as.factor(word(tidy$variable, 1, sep=fixed(".")))
-tidy$input.type <- as.factor(word(tidy$variable, 2, sep=fixed(".")))
+tidy$signal.domain <- as.factor(word(tidy$variable, 2, sep=fixed(".")))
 tidy$acceleration.component <- as.factor(word(tidy$variable, 3, sep=fixed(".")))
 tidy$acceleration.type <- as.factor(word(tidy$variable, 4, sep=fixed(".")))
 tidy$vector.characteristic <- as.factor(word(tidy$variable, 5, sep=fixed(".")))
 tidy <- select(tidy, subject, activity.label, descriptive.statistic, 
-               input.type, acceleration.component, acceleration.type, 
+               signal.domain, acceleration.component, acceleration.type, 
                vector.characteristic, value)
 tidy <- tbl_df(tidy)
 rm(tdf_data)
@@ -157,7 +157,7 @@ rm(tdf_data)
 ###############################################################################
 summary <- tidy %>%
         group_by(subject, activity.label, 
-                 descriptive.statistic, input.type,
+                 descriptive.statistic, signal.domain,
                  acceleration.component, acceleration.type,
                  vector.characteristic) %>%
         summarize(mean.value=mean(value))

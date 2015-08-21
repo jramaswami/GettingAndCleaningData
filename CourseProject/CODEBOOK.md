@@ -69,17 +69,18 @@ Type of descriptive statistic the value represented in the raw data.
 </td>
 </tr>
 <tr>
-<td>input.type</td>
+<td>signal.domain</td>
 <td>
-The type of input. The data from the original research contained
-two types of input.  First, the researchers labeled raw input 
-as "time" input.
-Second, the researches applied a Fast Fourier Transform to input as well.
+The domain of the signal. The data from the original research contained
+data from two domains.  First, the researchers labeled raw input 
+as time domain signals.
+Second, the researches applied a Fast Fourier Transform to calculate
+frequency domain signals.
 </td>
 <td>
 <ol>
 <li>TIME</li>
-<li>FAST_FOURIER_TRANSFORM</li>
+<li>FREQUENCY</li>
 </ol>
 </td>
 </tr>

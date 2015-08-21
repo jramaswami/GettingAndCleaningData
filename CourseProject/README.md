@@ -37,7 +37,8 @@ The intitial issue that jumped out was that the column names are values,
 not variables.  Each measurement provided by the researchers can
 be categorized in a number of ways:
 
-1.  It is either time data or has had a Fast Fourier Transform applied.
+1.  It is either data from the time domain or has had a Fast Fourier Transform 
+applied and is from the freqency domain.
 2.  It is from the accelerometer and represents linear 
 acceleration, or from the gyroscope and represents angular velocity, 
 or has had further calculations done and represent linear jerk acceleration
@@ -64,9 +65,9 @@ of the raw column name into a value leading to the reshaping of:
 
 to
 
-| ... | descriptive.statistic | input.type | acceleration.component | acceleration.type | vector.characteristic |   value   | ... |
-|-----|-----------------------|------------|------------------------|-------------------|-----------------------|-----------|-----|
-| ... |         MEAN          |    TIME    |         GRAVITY        |       LINEAR      |           X           | 0.3459274 | ... |
+| ... | descriptive.statistic | signal.domain | acceleration.component | acceleration.type | vector.characteristic |   value   | ... |
+|-----|-----------------------|---------------|------------------------|-------------------|-----------------------|-----------|-----|
+| ... |         MEAN          |    TIME       |         GRAVITY        |       LINEAR      |           X           | 0.3459274 | ... |
 
 
 Once the data is tidied the analysis continues by grouping the data and
