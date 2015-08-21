@@ -2,8 +2,8 @@ library(dplyr)
 library(stringr)
 library(reshape2)
 
-inputDataDir = file.path("data","raw")
-outputDataDir = file.path("data","tidy")
+inputDataDir = file.path("UCI HAR Dataset")
+outputDataDir = file.path(".")
 
 ###############################################################################
 # Function to rename columns

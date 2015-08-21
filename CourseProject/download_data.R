@@ -1,33 +1,13 @@
 library("rjson")
 
-checkDataDir <- function() {
-	if (!file.exists("data")) {
-		cat("Creating data directory ...\n")
-		dir.create("data")
-	}
-}
-
 downloadData <- function() {
 
-	urls <- c("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",
-				"http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip")
-	filenames <- c("coursera_dataset.zip", "uci_dataset.zip")
-	jsonFilenames <- c("coursera_download_metadata.json", "uci_download_metadata.json")
+	url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+	zipFilename <- "coursera_dataset.zip"
+	jsonFilename <- "download_metadata.json"
 	
-	prompt <- "Where would you like me to download data from?"
-	choices <- c("1. Coursera",
-				  "2. Original data source (UC Irvine)")
-	response <- getUserInput(prompt, choices)
-
-	if (response == 0) {
-		# user quit or wouldn't choose
-		return(FALSE)
-	}
-
-	checkDataDir()
-
-	destFilePath <- file.path("data", filenames[response])
-	jsonFilePath <- file.path("data", jsonFilenames[response])
+	destFilePath <- zipFilename
+	jsonFilePath <- jsonFilename
 	doDownload <- TRUE
 
 	if (file.exists(destFilePath)) {
@@ -62,11 +42,11 @@ downloadData <- function() {
 	if (doDownload) {
 		# download data
 		cat("Downloading data to", destFilePath, "...\n")
-		download.file(urls[response], destfile=destFilePath, method="curl")
+		download.file(url, destfile=destFilePath, method="curl")
 
 		# write download metadata to json file
-		json <- toJSON(list(downloadDate = date(), url = urls[response],
-							filename = filenames[response]))
+		json <- toJSON(list(downloadDate = date(), url = url,
+							filename = zipFilename))
 		if (file.exists(jsonFilePath)) {
 			cat("Removing old download metadata ...\n")
 			file.remove(jsonFilePath)
@@ -74,19 +54,12 @@ downloadData <- function() {
 		cat("Writing download metadata to", jsonFilePath, "...\n")
 		cat(json, file=jsonFilePath)
 		cat("Extracting file ... \n")
-		unzip(destFilePath, overwrite = TRUE, exdir="data")
+		
+		unzip(destFilePath, overwrite = TRUE)
 		
 		cat("Getting rid of unecessary data ...\n")
-		unlink(file.path("data", "UCI\ HAR\ Dataset", "train", "Inertial Signals"), recursive=TRUE, force=TRUE)
-		unlink(file.path("data", "UCI\ HAR\ Dataset", "test", "Inertial Signals"), recursive=TRUE, force=TRUE)
-		
-		cat("Renaming folder to 'raw' ...")
-		rawPath <- file.path("data", "raw")
-		if (file.exists(rawPath)) {
-		        unlink(rawPath, recursive=TRUE, force=TRUE)
-		}
-		rename <- file.rename(file.path("data","UCI\ HAR\ Dataset"), file.path("data","raw"))
-		
+		unlink(file.path("UCI\ HAR\ Dataset", "train", "Inertial Signals"), recursive=TRUE, force=TRUE)
+		unlink(file.path("UCI\ HAR\ Dataset", "test", "Inertial Signals"), recursive=TRUE, force=TRUE)
 	}
 }
 
@@ -122,3 +95,7 @@ getUserInput <- function(prompt, choices) {
 	cat ("Goodbye!\n")
 	0
 }
+
+# Run the download
+downloadData()
+
