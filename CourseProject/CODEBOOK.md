@@ -5,10 +5,9 @@ This data is the mean value of the mean and standard deviations
 of acceleration data gathered from the smartphones of volunteers
 as they performed a variety of activities.
 
-The original acceleration data was gathered by  
-researchers Jorge L. Reyes-Ortiz, Davide Anguita,
-Alessandro Ghio, Luca Oneto and Xavier Parra from the 
-martlab - Non-Linear Complex Systems Laboratory
+The original acceleration data was gathered by  researchers Jorge L. 
+Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto and Xavier 
+Parra from the Smartlab - Non-Linear Complex Systems Laboratory
 DITEN - Università degli Studi di Genova, Genoa, Italy and
 CETpD - Technical Research Centre for Dependency Care and Autonomous Living
 Universitat Politècnica de Catalunya, Vilanova i la Geltrú, Spain.
