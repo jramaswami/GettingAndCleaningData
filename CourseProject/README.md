@@ -72,35 +72,17 @@ to
 Once the data is tidied the analysis continues by grouping the data and
 providing a mean of each value of the groups.
 
-## Project Directory Structure
+## R Scripts
 
-This project is organized in a manner that is based on the directory 
-structure of an R package.
+The download_data.R script will download the dataset required for this 
+project.  It will record metadata about the download in the
+download_metadata.json file. It will then unzip the data, delete 
+unnecessary files (Inertial Signals data).  
 
-### R Scripts
-
-All scripts are contained in the R/ directory.  To run them your working
-directory should be the project's home, i.e. the directory containing this
-README.md file.  
-
-The R/download_data.R script will download the dataset
-required for this project and place it in the data directory.  It will
-record metadata about the download in the appropriate metadata.json file.
-It will then unzip the data, delete unnecessary files.  It currently renames
-the parent directory of the unzipped data to "raw" since that is more
-descriptive.
-
-The R/run_analysis.R script will clean the raw data, tidy it, and summarize
+The run_analysis.R script will clean the raw data, tidy it, and summarize
 by calculating the mean values on the data when it is
 grouped by subject, activity, descriptive 
 statistic, input type, acceleration component, acceleration type, and
 vector characteristic.  This summary data is then written to 
-data/tidy/summary.dat using the write.table() function, as required.
+summary.dat using the write.table() function, as required.
 
-### Data
-
-All data should reside in the data/ directory.  The R/download_data.R
-will create the data directory if there isn't one.  The R/run_analysis.R
-script reads data from data/raw and writes data to data/tidy.  However,
-this can be changed by altering the inputDataDir and outputDataDir
-variables in lines 5 and 6 of R/run_analysis.R.
