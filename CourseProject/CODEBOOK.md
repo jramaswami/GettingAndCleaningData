@@ -88,12 +88,12 @@ frequency domain signals.
 <td>acceleration.component</td>
 <td>
 The component of acceleration.  The researchers original data divided
-the acceleration into two components: the gravitational acceleraton and
-an estimated value for the acceleration of the subject's body.
+the acceleration into two components: the gravitational acceleration and
+the acceleration of the subject's body.
 </td>
 <td>
 <ol>
-<li>ESTIMATED_BODY</li>
+<li>BODY</li>
 <li>GRAVITY</li>
 </ol>
 </td>

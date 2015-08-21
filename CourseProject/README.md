@@ -45,7 +45,7 @@ or has had further calculations done and represent linear jerk acceleration
 , or angular jerk acceleration.
 3.  Researchers took the original acceleration data and divided it into
 components, so the measurement is either the gravitational component or the
-estimated body component of acceleration.
+body component of acceleration.
 4.  Researchers also divided the acceleration into the various vector
 components: x direction, y direction, z direction, and magnitude.  So
 a measurement is represents of these components.

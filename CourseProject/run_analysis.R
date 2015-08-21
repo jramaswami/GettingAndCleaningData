@@ -27,7 +27,7 @@ nameColumn <- function(cname) {
         # acceleration component -- Body or Gravity
         accelerationComponent = "Unknown_Acceleration_Component"
         if (str_detect(cname, "Body")) {
-                accelerationComponent = "Estimated_Body"
+                accelerationComponent = "Body"
         } else if (str_detect(cname, "Gravity")) {
                 accelerationComponent = "Gravity"
         }
