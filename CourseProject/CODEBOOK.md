@@ -141,7 +141,7 @@ measurements in the original research data when grouped by:
 <ul>
 <li>activity.label</li>
 <li>descriptive.statistic</li>
-<li>input.type</li>
+<li>signal.domain</li>
 <li>acceleration.component</li>
 <li>acceleration.type</li>
 <li>vector.component</li>
