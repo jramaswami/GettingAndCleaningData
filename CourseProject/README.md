@@ -60,34 +60,30 @@ The analysis script melts the data and transforms each of the 5 components
 of the raw column name into a value leading to the reshaping of:
 
 <table>
-<thead><tr><th>&#8230;</th><th>tGravityAcc-mean()-X</th><th>&#8230;</th></tr></thead>
-<tbody<tr><td>&#8230;</td><td>0.3459274</td><td>&#8230;</td></tr></tbody>
+<thead><tr><th>tGravityAcc-mean()-X</th></tr></thead>
+<tbody<tr><td>0.3459274</td></tr></tbody>
 </table>
 
-to
+to:
 
 <table>
 <thead>
 <tr>
-<th>...</th>
 <th>descriptive.statistic</th>
 <th>signal.domain</th>
 <th>acceleration.component</th>
 <th>acceleration.type</th>
 <th>vector.characteristic</th>
 <th>value</th>
-<th>&#8230;</th>
 </tr>
 </thead>
 <tbody>
-<td>...</td>
 <td>MEAN</td>
 <td>TIME</td>
 <td>GRAVITY</td>
 <td>LINEAR</td>
 <td>X</td>
 <td>0.3459274</td>
-<td>&#8230;</td>
 </tr>
 </tbody>
 </table>
