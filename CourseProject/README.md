@@ -59,16 +59,37 @@ the application of a Fast Fourier Transform (so it is time data).
 The analysis script melts the data and transforms each of the 5 components
 of the raw column name into a value leading to the reshaping of:
 
-| ... | tGravityAcc-mean()-X | ... |
-|-----|----------------------|-----|
-| ... |      0.3459274       | ... |
+<table>
+<thead><tr><th>...</th><th>tGravityAcc-mean()-X</th><th>...</th></tr></thead>
+<tbody<tr><td>...</td><td>0.3459274</td><td>...</td></tr></tbody>
+</table>
 
 to
 
-| ... | descriptive.statistic | signal.domain | acceleration.component | acceleration.type | vector.characteristic |   value   | ... |
-|-----|-----------------------|---------------|------------------------|-------------------|-----------------------|-----------|-----|
-| ... |         MEAN          |    TIME       |         GRAVITY        |       LINEAR      |           X           | 0.3459274 | ... |
-
+<table>
+<thead>
+<tr>
+<th>descriptive.statistic</th>
+<th>signal.domain</th>
+<th>acceleration.component</th>
+<th>acceleration.type</th>
+<th>vector.characteristic</th>
+<th>value</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<td>...</td>
+<td>MEAN</td>
+<td>TIME</td>
+<td>GRAVITY</td>
+<td>LINEAR</td>
+<td>X</td>
+<td>0.3459274</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
 
 Once the data is tidied the analysis continues by grouping the data and
 providing a mean of each value of the groups.
