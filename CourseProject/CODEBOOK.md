@@ -116,7 +116,7 @@ linear jerk acceleration and angular jerk accleration.
 <li>LINEAR_JERK</li>
 <li>ANGULAR_JERK</li>
 </ol>
-<td>
+</td>
 </tr>
 <tr>
 <td>vector.characteristic</td>
