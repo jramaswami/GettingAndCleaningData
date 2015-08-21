@@ -76,13 +76,18 @@ providing a mean of each value of the groups.
 
 The download_data.R script will download the dataset required for this 
 project.  It will record metadata about the download in the
-download_metadata.json file. It will then unzip the data, delete 
+download_metadata.json file. It will unzip the data and delete 
 unnecessary files (Inertial Signals data).  
 
-The run_analysis.R script will clean the raw data, tidy it, and summarize
+The run_analysis.R script will clean the data, tidy it, and summarize it
 by calculating the mean values on the data when it is
 grouped by subject, activity, descriptive 
 statistic, input type, acceleration component, acceleration type, and
 vector characteristic.  This summary data is then written to 
-summary.dat using the write.table() function, as required.
+summary.dat using the write.table() function, as required. The 
+run_analysis.R script assumes that the data is in the UCI HAR Dataset/
+directory.  If this is not the case, you can change line 5 to point
+to the directory where the data resides.  You can also change line 6
+to change where summary.dat is written.
+
 
