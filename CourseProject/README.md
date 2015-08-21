@@ -69,7 +69,7 @@ to
 <table>
 <thead>
 <tr>
-<th>&#8230;</th>
+<th>&#8230; </th>
 <th>descriptive.statistic</th>
 <th>signal.domain</th>
 <th>acceleration.component</th>
@@ -80,7 +80,7 @@ to
 </tr>
 </thead>
 <tbody>
-<td>&#8230;</td>
+<td>&#8230; </td>
 <td>MEAN</td>
 <td>TIME</td>
 <td>GRAVITY</td>
