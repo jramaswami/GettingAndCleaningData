@@ -168,4 +168,4 @@ summary <- tidy %>%
 if (!dir.exists(file.path(outputDataDir))) {
         dir.create(file.path(outputDataDir))
 }
-write.table(summary, file.path(outputDataDir,"summary.dat"),row.names=FALSE)
+write.table(summary, file.path(outputDataDir,"summary.txt"),row.names=FALSE)
