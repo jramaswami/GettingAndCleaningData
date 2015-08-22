@@ -21,7 +21,8 @@ has been undone and the test and training datasets have been recombined
 into one dataset.
 
 Mean and standard deviation values for each type of measurement
-were extracted and the mean value calculated.
+were extracted and the mean value calculated.  This summary
+data is written to summary.txt.
 
 ## Data Dictionary
 
